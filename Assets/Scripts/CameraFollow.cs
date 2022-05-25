@@ -11,11 +11,8 @@ public class CameraFollow : MonoBehaviour
     {
        //offset = transform.position - target.position;
     }
-    void Update()
-    {
-        Follow();
-    }
-    private void Follow()
+
+    private void LateUpdate()
     {
         transform.position = Vector3.Lerp(transform.position, target.position + offset, Time.deltaTime * lerpSpeed);
     }

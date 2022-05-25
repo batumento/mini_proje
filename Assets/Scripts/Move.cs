@@ -4,25 +4,38 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float horizontalSpeed;
+    public float swipeSpeed;
+    public float moveSpeed;
 
-    private float horizontal;
-    // Start is called before the first frame update
-    void Start()
+    private Camera camera;
+    private void Start()
     {
-        
+        camera = Camera.main;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Movement();
+        transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
+        if (Input.GetButton("Fire1"))
+        {
+            Movement();
+        }
     }
 
     private void Movement()
     {
-        horizontal = Input.GetAxis("Horizontal");
-        transform.Translate(new Vector3(horizontal * horizontalSpeed * Time.deltaTime, 0, moveSpeed * Time.deltaTime));
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = camera.transform.localPosition.z;
+        
+        Ray ray = camera.ScreenPointToRay(mousePos);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 200))
+        {
+            GameObject firstMoney = ATMRush.instance.moneys[0];
+            Vector3 hitVec = hit.point;
+            hitVec.y = firstMoney.transform.localPosition.y;
+            hitVec.z = firstMoney.transform.localPosition.z;
+
+            firstMoney.transform.localPosition = Vector3.MoveTowards(firstMoney.transform.localPosition,hitVec,Time.deltaTime * swipeSpeed);
+        }
     }
 }
