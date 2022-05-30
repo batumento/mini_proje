@@ -7,6 +7,8 @@ TagManager:
   - Collect
   - Collected
   - Head
+  - Collected2
+  - Collected3
   layers:
   - Default
   - TransparentFX

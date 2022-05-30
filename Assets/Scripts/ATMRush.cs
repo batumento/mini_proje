@@ -7,8 +7,6 @@ public class ATMRush : MonoBehaviour
     public static ATMRush instance;
     public List<GameObject> moneys = new List<GameObject>();
     public float movementDelay = 0.25f;
-    public GameObject Player;
-
     private void Awake()
     {
         if (instance == null)
@@ -21,7 +19,7 @@ public class ATMRush : MonoBehaviour
     {
         if (Input.GetButton("Fire1"))
         {
-            MoveListElements();
+           MoveListElements();
         }
         if (Input.GetButtonUp("Fire1"))
         {
@@ -34,6 +32,7 @@ public class ATMRush : MonoBehaviour
         other.transform.parent = this.transform;
         Vector3 newPosition = moneys[index].transform.localPosition;
         newPosition.z += 1;
+        newPosition.y = -11.68f;
         other.transform.localPosition = newPosition;
         moneys.Add(other);
         StartCoroutine(MakeObjectsBigger());
