@@ -16,6 +16,9 @@ public class AnimationStateController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        animator.SetBool(isRunningHash, true);
+        if (Input.GetMouseButton(0))
+        {
+            animator.SetBool(isRunningHash, true);
+        }
     }
 }

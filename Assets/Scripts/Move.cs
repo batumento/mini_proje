@@ -6,15 +6,24 @@ public class Move : MonoBehaviour
 {
     public float swipeSpeed;
     public float moveSpeed;
+    private bool isPressed;
 
     private Camera camera;
+    private void Awake()
+    {
+        isPressed = false;
+    }
     private void Start()
     {
         camera = Camera.main;
     }
     private void Update()
     {
-        transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
+        if (Input.GetMouseButton(0) || isPressed )
+        {
+            transform.position += Vector3.forward * moveSpeed * Time.deltaTime;
+            isPressed = true;
+        }
         if (Input.GetButton("Fire1"))
         {
             Movement();
@@ -36,6 +45,7 @@ public class Move : MonoBehaviour
             hitVec.z = firstMoney.transform.localPosition.z;
 
             firstMoney.transform.localPosition = Vector3.MoveTowards(firstMoney.transform.localPosition,hitVec,Time.deltaTime * swipeSpeed);
+     
         }
     }
 }
